@@ -1,0 +1,10 @@
+env:
+    browser: true
+    node: false
+globals:
+    angular: true
+plugins:
+    - angular
+rules:
+    no-unused-vars: false
+    angular/ng_di: [2, "array"]
