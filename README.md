@@ -17,7 +17,7 @@ angular.module("app", ["ui.grid", "ui.grid.draggable-rows"]);
 ```
 
 ## Usage
-To add _drag and drop_ functionality to your table you have to insert `ui-grid-draggable-rows` directive to your table.
+To add _drag and drop_ functionality you have to insert `ui-grid-draggable-rows` directive to your table.
 
 ```html
 <div ui-grid="gridOptions" class="grid" ui-grid-draggable-rows></div>
@@ -36,19 +36,22 @@ Out of the box this plugin does nothing with draggable rows - instead it raise a
 
 ```js
 $scope.gridOptions.onRegisterApi = function (gridApi) {
-    gridApi.draggableRows.on.rowDropped($scope, function savePosition(droppedRow, target) {
+    gridApi.draggableRows.on.rowDropped($scope, function (droppedRow, target) {
         // Now you can update the position or do something else
         // droppedRow and target variables are DOM elements
-        // to extract row id just use getAttrbiute()
+        // to extract row id just use getAttrbiute("draggable-id")
 
         var droppedId = droppedRow.getAttribute("draggable-id");
         var targetId = target.getAttribute("draggable-id");
+
+        console.log("Dropped");
     });
 };
 ```
 
+## List of events
 
-| Event         | Listener                     | HTML5 equivalent | Description                                 |
+| Event         | Listener                     | Original event   | Description                                 |
 |---------------|------------------------------|------------------|---------------------------------------------|
 | rowDragged    | function(draggedRow)         | onDragStart      | Fired once during start dragging            |
 | rowEnterRow   | function(draggedRow, row)    | onDragEnter      | Fired when draggable row enter on other row |
@@ -57,7 +60,7 @@ $scope.gridOptions.onRegisterApi = function (gridApi) {
 | rowFinishDrag | function()                   | onDragEnd        | Fired after finish dragging                 |
 | rowDropped    | function(droppedRow, target) | onDrop           | Fired when row is dropping to other row     |
 
-To listen these events just register new listener via ui-grid API.
+To listen these events just register new listener via _ui-grid_ API.
 
 ```js
 $scope.gridData.onRegisterApi = function (gridApi) {
@@ -68,3 +71,14 @@ $scope.gridData.onRegisterApi = function (gridApi) {
     });
 };
 ```
+
+## Todo
+- [ ] automatically insert the required template row
+- [ ] write test _(better late than never)_
+- [ ] improve documentation
+
+## Author
+This plugin has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski)
+
+## License
+The MIT License &copy; 2015
