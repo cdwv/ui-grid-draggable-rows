@@ -8,8 +8,8 @@
             ROW_OVER_CLASS: "ui-grid-draggable-row-over",
             publicEvents: {
                 draggableRows: {
-                    rowDropped: function(scope, droppedRow, target) {},
                     rowDragged: function(scope, draggedRow) {},
+                    rowDropped: function(scope, droppedRow, target) {},
                     rowOverRow: function(scope, draggedRow, row) {},
                     rowEnterRow: function(scope, draggedRow, row) {},
                     rowLeavesRow: function(scope, draggedRow, row) {},
@@ -46,7 +46,7 @@
                         }
 
                         e.dataTransfer.dropEffect = "move";
-                        grid.api.draggableRows.raise.rowDragged();
+                        grid.api.draggableRows.raise.rowOverRow(uiGridDraggableRowsCommon.catchedRow, this);
                     },
 
                     onDragStartEventListener: function () {
