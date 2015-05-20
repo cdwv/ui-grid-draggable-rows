@@ -49,14 +49,14 @@ $scope.gridOptions.onRegisterApi = function (gridApi) {
 };
 ```
 
-## Styling dropped elements
+## Additional styling
 When you drag a row over others they get additional css class `ui-grid-draggable-row-over`. This plugin has default styling for these elements. If you are using __less__ you could import styles into your application.
 
-```less
+```css
 @import "/path/to/bower_components/ui-grid-draggable-rows/less/draggable-rows";
 ```
 
-If you are using css just put these styles into your stylesheet
+If you are using clear css just put these styles into your stylesheet.
 
 ```css
 .ui-grid-draggable-row {
@@ -105,7 +105,7 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 - [ ] improve documentation
 
 ## Author
-This plugin has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski)
+Plugin **ui-grid-draggable-rows** has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski).
 
 ## License
 The MIT License &copy; 2015
