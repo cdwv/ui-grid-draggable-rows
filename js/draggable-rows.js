@@ -49,10 +49,11 @@
                         grid.api.draggableRows.raise.rowOverRow(uiGridDraggableRowsCommon.catchedRow, this);
                     },
 
-                    onDragStartEventListener: function () {
+                    onDragStartEventListener: function (e) {
                         uiGridDraggableRowsCommon.catchedRow = this;
 
                         this.style.opacity = "0.5";
+                        e.dataTransfer.setData("text/plain", "start");
 
                         grid.api.draggableRows.raise.rowDragged(this);
                     },
@@ -86,6 +87,8 @@
                         }
 
                         grid.api.draggableRows.raise.rowDropped(catchedRow, this);
+
+                        e.preventDefault();
                     }
                 };
 
