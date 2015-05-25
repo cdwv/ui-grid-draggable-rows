@@ -91,7 +91,7 @@ To listen these events just register new listener via _ui-grid_ API.
 
 ```js
 $scope.gridData.onRegisterApi = function (gridApi) {
-    gridApi.draggableRows.on.rowDragged($scope, function savePosition(draggedRow) {
+    gridApi.draggableRows.on.rowDragged($scope, function (draggedRow) {
         console.log("Start dragging...");
 
         // do something
