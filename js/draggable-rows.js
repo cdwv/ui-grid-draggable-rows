@@ -37,7 +37,7 @@
         .service("uiGridDraggableRowService", ["uiGridDraggableRowsConstants", "uiGridDraggableRowsCommon", function (uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
             this.prepareDraggableRow = function($scope, $element) {
                 var grid = $scope.grid;
-                var row = $element.get(0);
+                var row = $element[0];
 
                 var listeners = {
                     onDragOverEventListener: function (e) {
