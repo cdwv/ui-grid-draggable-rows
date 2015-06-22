@@ -82,6 +82,10 @@
                             e.stopPropagation();
                         }
 
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
                         if(catchedRow === this) {
                             return false;
                         }
