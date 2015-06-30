@@ -36,7 +36,7 @@ Out of the box this plugin does nothing with draggable rows - instead it raise a
 
 ```js
 $scope.gridOptions.onRegisterApi = function (gridApi) {
-    gridApi.draggableRows.on.rowDropped($scope, function (droppedRow, target) {
+    gridApi.draggableRows.on.rowDropped($scope, function (droppedRow, target, position) {
         // Now you can update the position or do something else
         // droppedRow and target variables are DOM elements
         // to extract row id just use getAttrbiute("draggable-id")
@@ -44,7 +44,7 @@ $scope.gridOptions.onRegisterApi = function (gridApi) {
         var droppedId = droppedRow.getAttribute("draggable-id");
         var targetId = target.getAttribute("draggable-id");
 
-        console.log("Dropped");
+        console.log("Dropped", position);
     });
 };
 ```
@@ -68,24 +68,33 @@ If you are using clear css just put these styles into your stylesheet.
 }
 
 .ui-grid-draggable-row-over:before {
-    content: ' ';
+    content: "";
     display: block;
-    padding-top: 5px;
-    height: 10px;
-    border: 1px dashed #AAA;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px dashed #AAA;
+}
+
+.ui-grid-draggable-row-over--above:before {
+    top: 0;
+}
+
+.ui-grid-draggable-row-over--below:before {
+    bottom: 0;
 }
 ```
 
 ## List of events
 
-| Event         | Listener                     | Original event   | Description                                 |
-|---------------|------------------------------|------------------|---------------------------------------------|
-| rowDragged    | function(draggedRow)         | onDragStart      | Fired once during start dragging            |
-| rowEnterRow   | function(draggedRow, row)    | onDragEnter      | Fired when draggable row enter on other row |
-| rowOverRow    | function(draggedRow, row)    | onDragOver       | Fired when draggable row is over other row  |
-| rowLeavesRow  | function(draggedRow, row)    | onDragLeave      | Fired when draggable row leaves other row   |
-| rowFinishDrag | function()                   | onDragEnd        | Fired after finish dragging                 |
-| rowDropped    | function(droppedRow, target) | onDrop           | Fired when row is dropping to other row     |
+| Event         | Listener                               | Original event   | Description                                 |
+|---------------|----------------------------------------|------------------|---------------------------------------------|
+| rowDragged    | function(draggedRow)                   | onDragStart      | Fired once during start dragging            |
+| rowEnterRow   | function(draggedRow, row)              | onDragEnter      | Fired when draggable row enter on other row |
+| rowOverRow    | function(draggedRow, row)              | onDragOver       | Fired when draggable row is over other row  |
+| rowLeavesRow  | function(draggedRow, row)              | onDragLeave      | Fired when draggable row leaves other row   |
+| rowFinishDrag | function()                             | onDragEnd        | Fired after finish dragging                 |
+| rowDropped    | function(droppedRow, target, position) | onDrop           | Fired when row is dropping to other row     |
 
 To listen these events just register new listener via _ui-grid_ API.
 
