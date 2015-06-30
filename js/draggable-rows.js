@@ -110,7 +110,7 @@
             return {
                 restrict: "ACE",
                 scope: {
-                    draggableId: "=",
+                    draggableId: "@",
                     grid: "="
                 },
                 compile: function() {
