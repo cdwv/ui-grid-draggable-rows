@@ -13,7 +13,7 @@
         publicEvents: {
             draggableRows: {
                 rowDragged: function(scope, draggedRow) {},
-                rowDropped: function(scope, droppedRow, target) {},
+                rowDropped: function(scope, droppedRow, target, position) {},
                 rowOverRow: function(scope, draggedRow, row) {},
                 rowEnterRow: function(scope, draggedRow, row) {},
                 rowLeavesRow: function(scope, draggedRow, row) {},
