@@ -3,13 +3,22 @@
 }
 
 .ui-grid-draggable-row-over {
-    color: #AAA;
+	position: relative;
 
     &:before {
-        content: ' ';
+        content: "";
         display: block;
-        padding-top: 5px;
-        height: 10px;
-        border: 1px dashed #AAA;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px dotted #AAA;
     }
+
+    &--above:before {
+    	top: 0;
+    }
+
+    &--below:before {
+    	bottom: 0;
+    }    
 }
