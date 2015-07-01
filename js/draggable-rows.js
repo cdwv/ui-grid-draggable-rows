@@ -24,8 +24,10 @@
 
     .factory('uiGridDraggableRowsCommon', [function() {
         return {
-            catchedRow: null,
-            position: null
+            draggedRow: null,
+            position: null,
+            fromIndex: null,
+            toIndex: null
         };
     }])
 
@@ -44,6 +46,11 @@
     }])
 
     .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
+        var move = function(from, to) {
+            /*jshint validthis: true */
+            this.splice(to, 0, this.splice(from, 1)[0]);
+        };
+
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
             var row = $element[0];
@@ -75,13 +82,15 @@
                         $element.addClass(uiGridDraggableRowsConstants.ROW_OVER_BELOW_CLASS);
                     }
 
-                    grid.api.draggableRows.raise.rowOverRow(uiGridDraggableRowsCommon.catchedRow, this);
+                    grid.api.draggableRows.raise.rowOverRow(uiGridDraggableRowsCommon.draggedRow, this);
                 },
 
                 onDragStartEventListener: function(e) {
                     this.style.opacity = '0.5';
 
-                    uiGridDraggableRowsCommon.catchedRow = this;
+                    uiGridDraggableRowsCommon.draggedRow = this;
+
+                    uiGridDraggableRowsCommon.fromIndex = $scope.grid.options.data.indexOf($scope.$parent.$parent.row.entity);
 
                     grid.api.draggableRows.raise.rowDragged(this);
                 },
@@ -93,11 +102,11 @@
                     this.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_ABOVE_CLASS);
                     this.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_BELOW_CLASS);
 
-                    grid.api.draggableRows.raise.rowLeavesRow(uiGridDraggableRowsCommon.catchedRow, this);
+                    grid.api.draggableRows.raise.rowLeavesRow(uiGridDraggableRowsCommon.draggedRow, this);
                 },
 
                 onDragEnterEventListener: function() {
-                    grid.api.draggableRows.raise.rowEnterRow(uiGridDraggableRowsCommon.catchedRow, this);
+                    grid.api.draggableRows.raise.rowEnterRow(uiGridDraggableRowsCommon.draggedRow, this);
                 },
 
                 onDragEndEventListener: function() {
@@ -105,7 +114,7 @@
                 },
 
                 onDropEventListener: function(e) {
-                    var catchedRow = uiGridDraggableRowsCommon.catchedRow;
+                    var draggedRow = uiGridDraggableRowsCommon.draggedRow;
 
                     if (e.stopPropagation) {
                         e.stopPropagation();
@@ -115,11 +124,33 @@
                         e.preventDefault();
                     }
 
-                    if (catchedRow === this) {
+                    if (draggedRow === this) {
                         return false;
                     }
 
-                    grid.api.draggableRows.raise.rowDropped(catchedRow, this, uiGridDraggableRowsCommon.position);
+                    uiGridDraggableRowsCommon.toIndex = $scope.grid.options.data.indexOf($scope.$parent.$parent.row.entity);
+
+                    var newIndex;
+
+                    if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
+                        if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
+                            newIndex = uiGridDraggableRowsCommon.toIndex - 1;
+                        } else {
+                            newIndex = uiGridDraggableRowsCommon.toIndex;
+                        }
+                    } else {
+                        if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
+                            newIndex = uiGridDraggableRowsCommon.toIndex;
+                        } else {
+                            newIndex = uiGridDraggableRowsCommon.toIndex + 1;
+                        }
+                    }
+
+                    $scope.$apply(function() {
+                        move.apply($scope.grid.options.data, [uiGridDraggableRowsCommon.fromIndex, newIndex]);
+                    });
+
+                    grid.api.draggableRows.raise.rowDropped(draggedRow, this, uiGridDraggableRowsCommon.position);
 
                     e.preventDefault();
                 }
@@ -132,7 +163,6 @@
             row.addEventListener('dragend', listeners.onDragEndEventListener, false);
             row.addEventListener('drop', listeners.onDropEventListener);
         };
-
     }])
 
     .directive('uiGridDraggableRow', ['uiGridDraggableRowService', function(uiGridDraggableRowService) {
