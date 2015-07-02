@@ -27,24 +27,17 @@ Now, you have to add draggable wrapper to your `rowTemplate`. If you have your o
 
 ```html
 $scope.gridOptions = {
-    rowTemplate: '<div draggable-id="{{ row.id }}" grid="grid" class="ui-grid-draggable-row" draggable="true"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'custom\': true }" ui-grid-cell></div></div>'
+    rowTemplate: '<div grid="grid" class="ui-grid-draggable-row" draggable="true"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'custom\': true }" ui-grid-cell></div></div>'
 };
 ```
 
 
-Out of the box this plugin does nothing with draggable rows - instead it raise a lot of events. To add action after dropping row register new listener on `rowDropped` event.
+To add action after dropping row register new listener on `rowDropped` event.
 
 ```js
 $scope.gridOptions.onRegisterApi = function (gridApi) {
-    gridApi.draggableRows.on.rowDropped($scope, function (droppedRow, target, position) {
-        // Now you can update the position or do something else
-        // droppedRow and target variables are DOM elements
-        // to extract row id just use getAttrbiute("draggable-id")
-
-        var droppedId = droppedRow.getAttribute("draggable-id");
-        var targetId = target.getAttribute("draggable-id");
-
-        console.log("Dropped", position);
+    gridApi.draggableRows.on.rowDropped($scope, function (info, dropTarget) {
+        console.log("Dropped", info);
     });
 };
 ```
@@ -89,18 +82,35 @@ If you are using clear css just put these styles into your stylesheet.
 
 | Event         | Listener                               | Original event   | Description                                 |
 |---------------|----------------------------------------|------------------|---------------------------------------------|
-| rowDragged    | function(draggedRow)                   | onDragStart      | Fired once during start dragging            |
-| rowEnterRow   | function(draggedRow, row)              | onDragEnter      | Fired when draggable row enter on other row |
-| rowOverRow    | function(draggedRow, row)              | onDragOver       | Fired when draggable row is over other row  |
-| rowLeavesRow  | function(draggedRow, row)              | onDragLeave      | Fired when draggable row leaves other row   |
+| rowDragged    | function(info, rowElement)             | onDragStart      | Fired once during start dragging            |
+| rowEnterRow   | function(info, rowElement)             | onDragEnter      | Fired when draggable row enter on other row |
+| rowOverRow    | function(info, rowElement)             | onDragOver       | Fired when draggable row is over other row  |
+| rowLeavesRow  | function(info, rowElement)             | onDragLeave      | Fired when draggable row leaves other row   |
 | rowFinishDrag | function()                             | onDragEnd        | Fired after finish dragging                 |
-| rowDropped    | function(droppedRow, target, position) | onDrop           | Fired when row is dropping to other row     |
+| rowDropped    | function(info, targetElement)          | onDrop           | Fired when row is dropping to other row     |
 
 To listen these events just register new listener via _ui-grid_ API.
 
+`info` is an object with the following properties
+```js
+{
+    draggedRow: domElement,     // The dragged row element
+
+    draggedRowEntity: object,   // The object the row represents in the grid data (`row.entity`)
+
+    position: string,           // String that indicates whether the row was dropped
+                                // above or below the drop target (determined by half row height)
+                                // eg. 'above' or 'below'
+
+    fromIndex: int,             // Original position of dragged row in sequence
+
+    toIndex: int,               // New position of dragged row in the sequence
+}
+```
+
 ```js
 $scope.gridData.onRegisterApi = function (gridApi) {
-    gridApi.draggableRows.on.rowDragged($scope, function (draggedRow) {
+    gridApi.draggableRows.on.rowDragged($scope, function (info, rowElement) {
         console.log("Start dragging...");
 
         // do something
