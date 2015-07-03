@@ -3,6 +3,8 @@ Draggable rows plugin for ui-grid
 
 Play with HTML5 _drag and drop_ in angular ui-grid.
 
+![Preview](http://i.imgur.com/1Zmi1B6.gif)
+
 ## Install
 Install through bower
 
@@ -57,6 +59,7 @@ If you are using clear css just put these styles into your stylesheet.
 }
 
 .ui-grid-draggable-row-over {
+    position: relative;
     color: #AAA;
 }
 
