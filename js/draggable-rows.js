@@ -46,7 +46,7 @@
         };
     }])
 
-    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
+    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, $parse) {
         var move = function(from, to) {
             /*jshint validthis: true */
             this.splice(to, 0, this.splice(from, 1)[0]);
@@ -55,6 +55,8 @@
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
             var data = grid.options.data;
+            if (angular.isString(data))
+                data = $parse(data)(grid.appScope);
             var row = $element[0];
 
             var listeners = {
