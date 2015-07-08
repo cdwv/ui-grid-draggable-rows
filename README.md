@@ -5,6 +5,8 @@ Play with HTML5 _drag and drop_ in angular ui-grid.
 
 ![Preview](http://i.imgur.com/1Zmi1B6.gif)
 
+> View demo in codepen http://codepen.io/anon/pen/wayNOv
+
 ## Install
 Install through bower
 
