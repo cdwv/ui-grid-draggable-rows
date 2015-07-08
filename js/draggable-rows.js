@@ -55,9 +55,11 @@
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
             var data = grid.options.data;
-            if (angular.isString(data))
-                data = $parse(data)(grid.appScope);
             var row = $element[0];
+
+            if (angular.isString(data)) {
+                data = $parse(data)(grid.appScope);
+            }
 
             var listeners = {
                 onDragOverEventListener: function(e) {
