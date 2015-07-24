@@ -54,12 +54,15 @@
 
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
-            var data = grid.options.data;
             var row = $element[0];
 
-            if (angular.isString(data)) {
-                data = $parse(data)(grid.appScope);
-            }
+            var data = function() {
+                if (angular.isString(grid.options.data)) {
+                    return $parse(grid.options.data)(grid.appScope);
+                }
+
+                return grid.options.data;
+            };
 
             var listeners = {
                 onDragOverEventListener: function(e) {
@@ -99,7 +102,7 @@
 
                     uiGridDraggableRowsCommon.position = null;
 
-                    uiGridDraggableRowsCommon.fromIndex = data.indexOf(uiGridDraggableRowsCommon.draggedRowEntity);
+                    uiGridDraggableRowsCommon.fromIndex = data().indexOf(uiGridDraggableRowsCommon.draggedRowEntity);
                     uiGridDraggableRowsCommon.toIndex = null;
 
                     grid.api.draggableRows.raise.rowDragged(uiGridDraggableRowsCommon, this);
@@ -138,7 +141,7 @@
                         return false;
                     }
 
-                    uiGridDraggableRowsCommon.toIndex = data.indexOf($scope.$parent.$parent.row.entity);
+                    uiGridDraggableRowsCommon.toIndex = data().indexOf($scope.$parent.$parent.row.entity);
 
                     if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
                         if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
@@ -150,7 +153,7 @@
                     }
 
                     $scope.$apply(function() {
-                        move.apply(data, [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex]);
+                        move.apply(data(), [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex]);
                     });
 
                     grid.api.draggableRows.raise.rowDropped(uiGridDraggableRowsCommon, this);
