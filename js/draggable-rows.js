@@ -93,7 +93,7 @@
 
                 onDragStartEventListener: function(e) {
                     this.style.opacity = '0.5';
-
+                    e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work		
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
 
