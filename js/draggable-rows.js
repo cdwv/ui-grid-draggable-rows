@@ -63,7 +63,15 @@
 
                 return grid.options.data;
             };
+            
+            grid.api.edit.on.beginCellEdit(null, function() {
+                row.setAttribute('draggable', false);
+            });
 
+            grid.api.edit.on.afterCellEdit(null, function() {
+                row.setAttribute('draggable', true);
+            });
+            
             var listeners = {
                 onDragOverEventListener: function(e) {
                     if (e.preventDefault) {
