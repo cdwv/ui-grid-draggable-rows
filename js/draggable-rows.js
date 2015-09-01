@@ -28,13 +28,26 @@
             draggedRowEntity: null,
             position: null,
             fromIndex: null,
-            toIndex: null
+            toIndex: null,
+            dragDisabled: false
         };
     }])
 
-    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', function(uiGridDraggableRowsConstants) {
+    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
         this.initializeGrid = function(grid, $scope, $element) {
+            var publicMethods = {
+                dragndrop:{
+                    enableDrag: function(){
+                        uiGridDraggableRowsCommon.dragDisabled = false;
+                    },
+                    disableDrag: function(){
+                        uiGridDraggableRowsCommon.dragDisabled = true;
+                    }
+                }
+            };
+            
             grid.api.registerEventsFromObject(uiGridDraggableRowsConstants.publicEvents);
+            grid.api.registerMethodsFromObject(publicMethods);
 
             grid.api.draggableRows.on.rowFinishDrag($scope, function() {
                 angular.forEach($element[0].querySelectorAll('.' + uiGridDraggableRowsConstants.ROW_OVER_CLASS), function(row) {
@@ -95,6 +108,9 @@
                 },
 
                 onDragStartEventListener: function(e) {
+                    if (uiGridDraggableRowsCommon.dragDisabled){
+                        return false;
+                    }
                     this.style.opacity = '0.5';
                     e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work		
                     uiGridDraggableRowsCommon.draggedRow = this;
