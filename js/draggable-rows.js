@@ -109,6 +109,12 @@
 
                 onDragStartEventListener: function(e) {
                     if (uiGridDraggableRowsCommon.dragDisabled){
+                        if (e.preventDefault){
+                            e.preventDefault();
+                        }
+                        if (e.stopPropagation){
+                            e.stopPropagation();
+                        }
                         return false;
                     }
                     this.style.opacity = '0.5';
