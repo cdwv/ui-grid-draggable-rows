@@ -128,6 +128,12 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 - [ ] write test _(better late than never)_
 - [ ] improve documentation
 
+## Support
+
+[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/img/logo.svg">](http://codewave.eu)
+     
+Project is currently maintained by [codewave.eu](http://codewave.eu). 
+
 ## Author
 Plugin **ui-grid-draggable-rows** has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski).
 
