@@ -17,7 +17,8 @@
                 rowOverRow: function(scope, info, rowElement) {},
                 rowEnterRow: function(scope, info, rowElement) {},
                 rowLeavesRow: function(scope, info, rowElement) {},
-                rowFinishDrag: function(scope) {}
+                rowFinishDrag: function(scope) {},
+                beforeRowMove: function(scope, from, to, data) {}
             }
         }
     })
@@ -47,7 +48,9 @@
     }])
 
     .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, $parse) {
-        var move = function(from, to) {
+        var move = function(from, to, grid) {
+            grid.api.draggableRows.raise.beforeRowMove(from, to, this);
+
             /*jshint validthis: true */
             this.splice(to, 0, this.splice(from, 1)[0]);
         };
@@ -96,7 +99,7 @@
 
                 onDragStartEventListener: function(e) {
                     this.style.opacity = '0.5';
-                    e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work		
+                    e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work     
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
 
@@ -153,7 +156,7 @@
                     }
 
                     $scope.$apply(function() {
-                        move.apply(data(), [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex]);
+                        move.apply(data(), [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex, grid]);
                     });
 
                     grid.api.draggableRows.raise.rowDropped(uiGridDraggableRowsCommon, this);

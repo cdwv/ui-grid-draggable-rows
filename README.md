@@ -92,6 +92,7 @@ If you are using clear css just put these styles into your stylesheet.
 | rowOverRow    | function(info, rowElement)             | onDragOver       | Fired when draggable row is over other row  |
 | rowLeavesRow  | function(info, rowElement)             | onDragLeave      | Fired when draggable row leaves other row   |
 | rowFinishDrag | function()                             | onDragEnd        | Fired after finish dragging                 |
+| beforeRowMove | function(from, to, data)               |                  | Fired before a row's index is changed       |
 | rowDropped    | function(info, targetElement)          | onDrop           | Fired when row is dropping to other row     |
 
 To listen these events just register new listener via _ui-grid_ API.
@@ -123,16 +124,23 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 };
 ```
 
+## Handling grouping
+In order to handle grouping you have to manually set the 'from' grouping value to that of the 'to' as shown below.
+
+
+```js
+$scope.gridData.onRegisterApi = function (gridApi) {
+    gridApi.draggableRows.on.beforeRowMove($scope, function (from, to, data) {
+        console.log("Setting the grouping values");
+        data[from].groupValue = data[to].groupValue;
+    });
+};
+```
+
 ## Todo
 - [ ] automatically insert the required template row
 - [ ] write test _(better late than never)_
 - [ ] improve documentation
-
-## Support
-
-[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/img/logo.svg">](http://codewave.eu)
-     
-Project is currently maintained by [codewave.eu](http://codewave.eu). 
 
 ## Author
 Plugin **ui-grid-draggable-rows** has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski).
