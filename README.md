@@ -101,7 +101,11 @@ To listen these events just register new listener via _ui-grid_ API.
 {
     draggedRow: domElement,     // The dragged row element
 
-    draggedRowEntity: object,   // The object the row represents in the grid data (`row.entity`)
+    draggedRowEntity: object,   // The object the dragged row represents in the grid data (`row.entity`)
+    
+    targetRow: domElement,      // The target row element
+    
+    targetRowEntity: object,    // The object the target row represents in the grid data
 
     position: string,           // String that indicates whether the row was dropped
                                 // above or below the drop target (determined by half row height)
