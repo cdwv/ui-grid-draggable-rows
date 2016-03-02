@@ -123,7 +123,7 @@
                 },
 
                 onDragEndEventListener: function() {
-                    grid.api.draggableRows.raise.rowFinishDrag();
+                    grid.api.draggableRows.raise.rowFinishDrag(uiGridDraggableRowsCommon, this);
                 },
 
                 onDropEventListener: function(e) {
