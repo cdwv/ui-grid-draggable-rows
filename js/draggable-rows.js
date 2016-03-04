@@ -77,7 +77,7 @@
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
             var row = $element[0];
-            var hasHandle = $scope.grid.options.useUiGridDraggableHandle;
+            var hasHandle = $scope.grid.options.useUiGridDraggableRowsHandle;
             var currentTarget = null;
             var handle = null;
 
@@ -219,14 +219,17 @@
                 }
             };
 
-            row.addEventListener('mousedown', listeners.onMouseDownEventListener, false);
-            row.addEventListener('mouseup', listeners.onMouseUpEventListener, false);
             row.addEventListener('dragover', listeners.onDragOverEventListener, false);
             row.addEventListener('dragstart', listeners.onDragStartEventListener, false);
             row.addEventListener('dragleave', listeners.onDragLeaveEventListener, false);
             row.addEventListener('dragenter', listeners.onDragEnterEventListener, false);
             row.addEventListener('dragend', listeners.onDragEndEventListener, false);
             row.addEventListener('drop', listeners.onDropEventListener);
+
+            if (hasHandle) {
+                row.addEventListener('mousedown', listeners.onMouseDownEventListener, false);
+                row.addEventListener('mouseup', listeners.onMouseUpEventListener, false);
+            }
         };
     }])
 
