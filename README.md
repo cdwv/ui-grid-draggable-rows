@@ -144,7 +144,6 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 };
 ```
 
-<<<<<<< HEAD
 ## Public methods
 
 | Method                      | Description                                       |
@@ -179,7 +178,7 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 
 ## Support
 
-[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/img/logo.svg">](http://codewave.eu) 
+[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/images/logo.svg">](http://codewave.eu) 
 
 Project is currently maintained by [codewave.eu](http://codewave.eu). 
 
