@@ -26,6 +26,8 @@
         return {
             draggedRow: null,
             draggedRowEntity: null,
+            targetRow: null,
+            targetRowEntity: null,
             position: null,
             fromIndex: null,
             toIndex: null,
@@ -181,6 +183,10 @@
                     }
 
                     uiGridDraggableRowsCommon.toIndex = data().indexOf($scope.$parent.$parent.row.entity);
+                    
+                    uiGridDraggableRowsCommon.targetRow = this;
+                    
+                    uiGridDraggableRowsCommon.targetRowEntity = $scope.$parent.$parent.row.entity;
 
                     if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
                         if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
