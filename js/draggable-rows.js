@@ -8,6 +8,7 @@
         ROW_OVER_CLASS: 'ui-grid-draggable-row-over',
         ROW_OVER_ABOVE_CLASS: 'ui-grid-draggable-row-over--above',
         ROW_OVER_BELOW_CLASS: 'ui-grid-draggable-row-over--below',
+        ROW_HANDLE_CLASS: 'ui-grid-draggable-row-handle',
         POSITION_ABOVE: 'above',
         POSITION_BELOW: 'below',
         publicEvents: {
@@ -99,9 +100,9 @@
             var listeners = {
                 onMouseDownEventListener: function (e) {
                     currentTarget = angular.element(e.target);
-                    handle = currentTarget.closest('.ui-grid-draggable-row-handle', $element)[0];
+                    handle = currentTarget.closest('.' + uiGridDraggableRowsConstants.ROW_HANDLE_CLASS, $element)[0];
                 },
-                
+
                 onMouseUpEventListener: function (e) {
                     currentTarget = null;
                     handle = null;
