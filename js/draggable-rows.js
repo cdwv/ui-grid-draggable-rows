@@ -33,19 +33,22 @@
         };
     }])
 
-    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
-        this.initializeGrid = function(grid, $scope, $element) {
-            var publicMethods = {
-                dragndrop:{
-                    enableDrag: function(){
-                        uiGridDraggableRowsCommon.dragDisabled = false;
-                    },
-                    disableDrag: function(){
-                        uiGridDraggableRowsCommon.dragDisabled = true;
-                    }
+    .factory('uiGridDraggableRowsSettings', [function() {
+        return {
+            dragDisabled: false
+        };
+    }])
+
+    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon' , 'uiGridDraggableRowsSettings', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings) {
+        var publicMethods = {
+            dragndrop: {
+                setDragDisabled: function setDragDisabled(status) {
+                    uiGridDraggableRowsSettings.dragDisabled = ~~status;
                 }
-            };
-            
+            }
+        };
+
+        this.initializeGrid = function(grid, $scope, $element) {
             grid.api.registerEventsFromObject(uiGridDraggableRowsConstants.publicEvents);
             grid.api.registerMethodsFromObject(publicMethods);
 
@@ -59,7 +62,7 @@
         };
     }])
 
-    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, $parse) {
+    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', 'uiGridDraggableRowsSettings', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings, $parse) {
         var move = function(from, to) {
             /*jshint validthis: true */
             this.splice(to, 0, this.splice(from, 1)[0]);
@@ -87,7 +90,7 @@
                     row.setAttribute('draggable', true);
                 });
             }
-            
+
             var listeners = {
                 onDragOverEventListener: function(e) {
                     if (e.preventDefault) {
@@ -119,15 +122,18 @@
                 },
 
                 onDragStartEventListener: function(e) {
-                    if (uiGridDraggableRowsCommon.dragDisabled){
-                        if (e.preventDefault){
+                    if (uiGridDraggableRowsSettings.dragDisabled) {
+                        if (e.preventDefault) {
                             e.preventDefault();
                         }
-                        if (e.stopPropagation){
+
+                        if (e.stopPropagation) {
                             e.stopPropagation();
                         }
+
                         return false;
                     }
+
                     this.style.opacity = '0.5';
                     e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work		
                     uiGridDraggableRowsCommon.draggedRow = this;

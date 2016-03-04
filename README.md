@@ -123,6 +123,21 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 };
 ```
 
+## Public methods
+
+| Method                      | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| setDragDisabled(boolean)    | Enable or disable drag 'n drop functionality      |
+
+
+All public methods are accessible through `dragndrop` object from `gridApi`. See example below
+
+```js
+$scope.gridData.onRegisterApi = function (gridApi) {
+    gridApi.dragndrop.setDragDisabled($scope.enabled);
+};
+```
+
 ## Todo
 - [ ] automatically insert the required template row
 - [ ] write test _(better late than never)_
