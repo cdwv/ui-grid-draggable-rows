@@ -1,7 +1,9 @@
 Draggable rows plugin for ui-grid
 =================================
 
+![NPM](https://img.shields.io/npm/v/ui-grid-draggable-rows.svg)
 ![Bower](https://img.shields.io/bower/v/ui-grid-draggable-rows.svg)
+![License](https://img.shields.io/npm/l/ui-grid-draggable-rows.svg)
 
 Play with HTML5 _drag and drop_ in angular ui-grid.
 
@@ -10,7 +12,13 @@ Play with HTML5 _drag and drop_ in angular ui-grid.
 > View demo in codepen http://codepen.io/anon/pen/wayNOv
 
 ## Install
-Install through bower
+Install using npm
+
+```sh
+npm install ui-grid-draggable-rows
+```
+
+Install using bower
 
 ```sh
 bower install ui-grid-draggable-rows

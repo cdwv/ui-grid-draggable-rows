@@ -1,6 +1,6 @@
 {
   "name": "ui-grid-draggable-rows",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "authors": [
     "Szymon Krajewski <szykra@gmail.com>"
   ],
@@ -12,9 +12,7 @@
   "keywords": [
     "angular",
     "ui-grid",
-    "drag",
-    "and",
-    "drop",
+    "dragndrop",
     "html5",
     "draggable"
   ],
