@@ -1,6 +1,8 @@
 Draggable rows plugin for ui-grid
 =================================
 
+![Bower](https://img.shields.io/bower/v/ui-grid-draggable-rows.svg)
+
 Play with HTML5 _drag and drop_ in angular ui-grid.
 
 ![Preview](http://i.imgur.com/1Zmi1B6.gif)
@@ -177,4 +179,4 @@ Project is currently maintained by [codewave.eu](http://codewave.eu).
 Plugin **ui-grid-draggable-rows** has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski).
 
 ## License
-The MIT License &copy; 2015
+The MIT License &copy; 2015 - 2016
