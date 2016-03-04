@@ -183,7 +183,7 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 Project is currently maintained by [codewave.eu](http://codewave.eu). 
 
 ## Author
-Plugin **ui-grid-draggable-rows** has been orginally developed by [Szymon Krajewski](https://github.com/skrajewski).
+Plugin **ui-grid-draggable-rows** has been originally developed by [Szymon Krajewski](https://github.com/skrajewski).
 
 ## License
 The MIT License &copy; 2015 - 2016
