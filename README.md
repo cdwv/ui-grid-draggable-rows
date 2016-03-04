@@ -46,6 +46,12 @@ $scope.gridOptions.onRegisterApi = function (gridApi) {
 };
 ```
 
+To enable using a "handle" for dragging the rows, add the `useUiGridDraggableRowsHandle` property to your gridOptions and add this class to your handle: `ui-grid-draggable-row-handle`.
+
+```js
+$scope.gridOptions.useUiGridDraggableRowsHandle = true;
+```
+
 ## Additional styling
 When you drag a row over others they get additional css class `ui-grid-draggable-row-over`. This plugin has default styling for these elements. If you are using __less__ you could import styles into your application.
 

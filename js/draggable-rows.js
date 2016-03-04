@@ -73,6 +73,9 @@
         this.prepareDraggableRow = function($scope, $element) {
             var grid = $scope.grid;
             var row = $element[0];
+            var hasHandle = $scope.grid.options.useUiGridDraggableHandle;
+            var currentTarget = null;
+            var handle = null;
 
             var data = function() {
                 if (angular.isString(grid.options.data)) {
@@ -94,6 +97,16 @@
             }
 
             var listeners = {
+                onMouseDownEventListener: function (e) {
+                    currentTarget = angular.element(e.target);
+                    handle = currentTarget.closest('.ui-grid-draggable-row-handle', $element)[0];
+                },
+                
+                onMouseUpEventListener: function (e) {
+                    currentTarget = null;
+                    handle = null;
+                },
+
                 onDragOverEventListener: function(e) {
                     if (e.preventDefault) {
                         e.preventDefault();
@@ -124,14 +137,9 @@
                 },
 
                 onDragStartEventListener: function(e) {
-                    if (uiGridDraggableRowsSettings.dragDisabled) {
-                        if (e.preventDefault) {
-                            e.preventDefault();
-                        }
-
-                        if (e.stopPropagation) {
-                            e.stopPropagation();
-                        }
+                    if (uiGridDraggableRowsSettings.dragDisabled || (hasHandle && !handle)) {
+                        e.preventDefault();
+                        e.stopPropagation();
 
                         return false;
                     }
@@ -207,6 +215,8 @@
                 }
             };
 
+            row.addEventListener('mousedown', listeners.onMouseDownEventListener, false);
+            row.addEventListener('mouseup', listeners.onMouseUpEventListener, false);
             row.addEventListener('dragover', listeners.onDragOverEventListener, false);
             row.addEventListener('dragstart', listeners.onDragStartEventListener, false);
             row.addEventListener('dragleave', listeners.onDragLeaveEventListener, false);
