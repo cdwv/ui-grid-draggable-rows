@@ -72,30 +72,28 @@ When you drag a row over others they get additional css class `ui-grid-draggable
 If you are using clear css just put these styles into your stylesheet.
 
 ```css
+.ui-grid-draggable-row-target {
+  opacity: 0.5 !important;
+}
 .ui-grid-draggable-row {
-    height: 30px;
+  height: 30px;
 }
-
 .ui-grid-draggable-row-over {
-    position: relative;
-    color: #AAA;
+  position: relative;
 }
-
 .ui-grid-draggable-row-over:before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    border-bottom: 1px dashed #AAA;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px dotted #AAA;
 }
-
 .ui-grid-draggable-row-over--above:before {
-    top: 0;
+  top: 0;
 }
-
 .ui-grid-draggable-row-over--below:before {
-    bottom: 0;
+  bottom: 0;
 }
 ```
 
@@ -119,9 +117,9 @@ To listen these events just register new listener via _ui-grid_ API.
     draggedRow: domElement,     // The dragged row element
 
     draggedRowEntity: object,   // The object the dragged row represents in the grid data (`row.entity`)
-    
+
     targetRow: domElement,      // The target row element
-    
+
     targetRowEntity: object,    // The object the target row represents in the grid data
 
     position: string,           // String that indicates whether the row was dropped
@@ -178,9 +176,9 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 
 ## Support
 
-[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/images/logo.svg">](http://codewave.eu) 
+[<img width="300" title="Codewave.eu" src="http://codewave.eu/assets/images/logo.svg">](http://codewave.eu)
 
-Project is currently maintained by [codewave.eu](http://codewave.eu). 
+Project is currently maintained by [codewave.eu](http://codewave.eu).
 
 ## Author
 Plugin **ui-grid-draggable-rows** has been originally developed by [Szymon Krajewski](https://github.com/skrajewski).

@@ -5,6 +5,7 @@
 
     .constant('uiGridDraggableRowsConstants', {
         featureName: 'draggableRows',
+        ROW_TARGET_CLASS: 'ui-grid-draggable-row-target',
         ROW_OVER_CLASS: 'ui-grid-draggable-row-over',
         ROW_OVER_ABOVE_CLASS: 'ui-grid-draggable-row-over--above',
         ROW_OVER_BELOW_CLASS: 'ui-grid-draggable-row-over--below',
@@ -61,6 +62,9 @@
                     row.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_CLASS);
                     row.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_ABOVE_CLASS);
                     row.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_BELOW_CLASS);
+                });
+                angular.forEach($element[0].querySelectorAll('.' + uiGridDraggableRowsConstants.ROW_TARGET_CLASS), function(row) {
+                    row.classList.remove(uiGridDraggableRowsConstants.ROW_TARGET_CLASS);
                 });
             });
         };
@@ -148,8 +152,8 @@
                         return false;
                     }
 
-                    this.style.opacity = '0.5';
-                    e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work     
+                    this.classList.add(uiGridDraggableRowsConstants.ROW_TARGET_CLASS);
+                    e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
 
@@ -162,7 +166,7 @@
                 },
 
                 onDragLeaveEventListener: function() {
-                    this.style.opacity = '1';
+                    this.classList.remove(uiGridDraggableRowsConstants.ROW_TARGET_CLASS);
 
                     this.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_CLASS);
                     this.classList.remove(uiGridDraggableRowsConstants.ROW_OVER_ABOVE_CLASS);
@@ -195,9 +199,9 @@
                     }
 
                     uiGridDraggableRowsCommon.toIndex = data().indexOf($scope.$parent.$parent.row.entity);
-                    
+
                     uiGridDraggableRowsCommon.targetRow = this;
-                    
+
                     uiGridDraggableRowsCommon.targetRowEntity = $scope.$parent.$parent.row.entity;
 
                     if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
