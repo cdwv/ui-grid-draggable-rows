@@ -106,7 +106,8 @@
 
             var listeners = {
                 onMouseDownEventListener: function (e) {
-                    currentTarget = angular.element(e.target);
+                    var eventTarget = e.target.correspondingUseElement || e.target;
+                    currentTarget = angular.element(eventTarget);
                     handle = currentTarget.closest('.' + uiGridDraggableRowsConstants.ROW_HANDLE_CLASS, $element)[0];
                 },
 
