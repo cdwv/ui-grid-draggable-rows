@@ -38,17 +38,11 @@
         };
     }])
 
-    .factory('uiGridDraggableRowsSettings', [function() {
-        return {
-            dragDisabled: false
-        };
-    }])
-
-    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon' , 'uiGridDraggableRowsSettings', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings) {
+    .service('uiGridDraggableRowsService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon' , function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon) {
         var publicMethods = {
             dragndrop: {
                 setDragDisabled: function setDragDisabled(status) {
-                    uiGridDraggableRowsSettings.dragDisabled = ~~status;
+                    this.dragDisabled = ~~status;
                 }
             }
         };
@@ -70,7 +64,7 @@
         };
     }])
 
-    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', 'uiGridDraggableRowsSettings', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings, $parse) {
+    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, $parse) {
         var move = function(from, to, grid) {
             grid.api.draggableRows.raise.beforeRowMove(from, to, this);
 
@@ -145,7 +139,7 @@
                 },
 
                 onDragStartEventListener: function(e) {
-                    if (uiGridDraggableRowsSettings.dragDisabled || (hasHandle && !handle)) {
+                    if (this.dragDisabled || (hasHandle && !handle)) {
                         e.preventDefault();
                         e.stopPropagation();
 
