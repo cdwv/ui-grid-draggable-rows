@@ -93,16 +93,23 @@
                 return grid.options.data;
             };
 
-            // issue #16
-            if (grid.api.hasOwnProperty('edit')) {
-                grid.api.edit.on.beginCellEdit(null, function() {
-                    row.setAttribute('draggable', false);
-                });
+            (function() {
+                // issue #51
+                var draggableState = null;
 
-                grid.api.edit.on.afterCellEdit(null, function() {
-                    row.setAttribute('draggable', true);
-                });
-            }
+                // issue #16
+                if (grid.api.hasOwnProperty('edit')) {
+                    grid.api.edit.on.beginCellEdit(null, function() {
+                        draggableState = row.getAttribute('draggable');
+                        row.setAttribute('draggable', false);
+                    });
+
+                    grid.api.edit.on.afterCellEdit(null, function() {
+                        row.setAttribute('draggable', draggableState);
+                        draggableState = null;
+                    });
+                }
+            }());
 
             var listeners = {
                 onMouseDownEventListener: function (e) {
