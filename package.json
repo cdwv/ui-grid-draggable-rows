@@ -1,6 +1,6 @@
 {
   "name": "ui-grid-draggable-rows",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "HTML5 Drag and Drop functionality for angular ui-grid",
   "main": "js/draggable-rows.js",
   "scripts": {
