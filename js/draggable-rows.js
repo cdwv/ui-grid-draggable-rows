@@ -70,7 +70,7 @@
         };
     }])
 
-    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', 'uiGridDraggableRowsSettings', '$parse', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings, $parse) {
+    .service('uiGridDraggableRowService', ['uiGridDraggableRowsConstants', 'uiGridDraggableRowsCommon', 'uiGridDraggableRowsSettings', '$parse','$window', function(uiGridDraggableRowsConstants, uiGridDraggableRowsCommon, uiGridDraggableRowsSettings, $parse, $window) {
         var move = function(from, to, grid) {
             grid.api.draggableRows.raise.beforeRowMove(from, to, this);
 
@@ -163,7 +163,7 @@
                     e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
-
+                    $window.draggedRow = $scope.$parent.$parent.row.entity;
                     uiGridDraggableRowsCommon.position = null;
 
                     uiGridDraggableRowsCommon.fromIndex = data().indexOf(uiGridDraggableRowsCommon.draggedRowEntity);
