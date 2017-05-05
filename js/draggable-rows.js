@@ -209,16 +209,32 @@
 
                     uiGridDraggableRowsCommon.targetRow = this;
 
-                    uiGridDraggableRowsCommon.targetRowEntity = $scope.$parent.$parent.row.entity;
+                    if ($scope.$parent.$parent.row.groupHeader) {
+                        var amountOfChildren = $scope.$parent.$parent.row.treeNode.children.length;
+                        var index;
+                        if (uiGridDraggableRowsCommon.position == uiGridDraggableRowsConstants.POSITION_ABOVE) {
+                            index = data()
+                                    .indexOf($scope.$parent.$parent.row.treeNode.children[0].row.entity) - 1;
+
+                        } else {
+                            index = data()
+                                .indexOf($scope.$parent.$parent.row.treeNode.children[amountOfChildren - 1].row.entity);
+                        }
+                        uiGridDraggableRowsCommon.toIndex = index;
+
+                    } else {
+                        uiGridDraggableRowsCommon.toIndex = data()
+                            .indexOf($scope.$parent.$parent.row.entity);
+                    }
 
                     if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
                         if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
                             uiGridDraggableRowsCommon.toIndex -= 1;
                         }
 
-                    } else if (uiGridDraggableRowsCommon.fromIndex >= uiGridDraggableRowsCommon.toIndex) {
+                    } /*else if (uiGridDraggableRowsCommon.fromIndex >= uiGridDraggableRowsCommon.toIndex) {
                         uiGridDraggableRowsCommon.toIndex += 1;
-                    }
+                    }*/
 
                     $scope.$apply(function() {
                         move.apply(data(), [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex, grid]);
