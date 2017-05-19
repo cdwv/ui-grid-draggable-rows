@@ -152,7 +152,8 @@
                 },
 
                 onDragStartEventListener: function(e) {
-                    if (uiGridDraggableRowsSettings.dragDisabled || (hasHandle && !handle)) {
+                    if (uiGridDraggableRowsSettings.dragDisabled || (hasHandle && !handle) ||
+						!this.draggable) {
                         e.preventDefault();
                         e.stopPropagation();
 
