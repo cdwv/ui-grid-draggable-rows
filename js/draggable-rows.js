@@ -76,6 +76,8 @@
 
             /*jshint validthis: true */
             this.splice(to, 0, this.splice(from, 1)[0]);
+
+            return this;
         };
 
         this.prepareDraggableRow = function($scope, $element) {
@@ -192,6 +194,9 @@
 
                 onDropEventListener: function(e) {
                     var draggedRow = uiGridDraggableRowsCommon.draggedRow;
+                    var treeNode = $scope.$parent.$parent.row.treeNode;
+                    var amountOfChildren = treeNode.children.length;
+                    var grouping = $scope.$parent.$parent.row.grid.api.grouping;
 
                     if (e.stopPropagation) {
                         e.stopPropagation();
@@ -209,18 +214,39 @@
 
                     uiGridDraggableRowsCommon.targetRow = this;
 
-                    uiGridDraggableRowsCommon.targetRowEntity = $scope.$parent.$parent.row.entity;
+                    if ($scope.$parent.$parent.row.groupHeader) {
+                        if (uiGridDraggableRowsCommon.position == uiGridDraggableRowsConstants.POSITION_ABOVE) {
+                            uiGridDraggableRowsCommon.toIndex = data().indexOf(treeNode.children[0].row.entity) - 1;
+                        } else {
+                            uiGridDraggableRowsCommon.toIndex = data().indexOf(treeNode.children[amountOfChildren - 1].row.entity);
+                        }
+                    } else {
+                        uiGridDraggableRowsCommon.toIndex = data().indexOf($scope.$parent.$parent.row.entity);
+                    }
 
                     if (uiGridDraggableRowsCommon.position === uiGridDraggableRowsConstants.POSITION_ABOVE) {
                         if (uiGridDraggableRowsCommon.fromIndex < uiGridDraggableRowsCommon.toIndex) {
-                            uiGridDraggableRowsCommon.toIndex -= 1;
-                        }
+                            if (grouping) {
+                                //previous row
+                                var previousRow = data()[uiGridDraggableRowsCommon.toIndex - 1][grouping.getGrouping().grouping[0].colName];
 
-                    } else if (uiGridDraggableRowsCommon.fromIndex >= uiGridDraggableRowsCommon.toIndex) {
-                        uiGridDraggableRowsCommon.toIndex += 1;
+                                //current row
+                                var currentRow = data()[uiGridDraggableRowsCommon.toIndex][grouping.getGrouping().grouping[0].colName];
+
+                                if (previousRow == currentRow) {
+                                    uiGridDraggableRowsCommon.toIndex -= 1;
+                                }
+                            } else {
+                                uiGridDraggableRowsCommon.toIndex -= 1;
+                            }
+                        }
                     }
 
                     $scope.$apply(function() {
+                        if ($scope.$parent.row.groupHeader) {
+                            return;
+                        }
+
                         move.apply(data(), [uiGridDraggableRowsCommon.fromIndex, uiGridDraggableRowsCommon.toIndex, grid]);
                     });
 
