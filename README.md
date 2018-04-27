@@ -9,7 +9,7 @@ Play with HTML5 _drag and drop_ in angular ui-grid.
 
 ![Preview](http://i.imgur.com/1Zmi1B6.gif)
 
-> Checkout our codepen collection http://codepen.io/collection/nmykqV/
+> Checkout our codepen collection https://codepen.io/collection/AMpZgd/
 
 ## Install
 Install using npm
