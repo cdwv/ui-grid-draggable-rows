@@ -34,13 +34,15 @@
             position: null,
             fromIndex: null,
             toIndex: null,
-            dragDisabled: false
+            dragDisabled: false,
+            limitDropToSelf: false
         };
     }])
 
     .factory('uiGridDraggableRowsSettings', [function() {
         return {
-            dragDisabled: false
+            dragDisabled: false,
+            limitDropToSelf: false
         };
     }])
 
@@ -49,6 +51,9 @@
             dragndrop: {
                 setDragDisabled: function setDragDisabled(status) {
                     uiGridDraggableRowsSettings.dragDisabled = ~~status;
+                },
+                setLimitDropToSelf: function setLimitDropToSelf(onlyDropToSelf) {
+                    uiGridDraggableRowsSettings.limitDropToSelf = onlyDropToSelf;
                 }
             }
         };
@@ -111,6 +116,12 @@
                 }
             }());
 
+            var getGridId = function($row) {
+                return $row.closest('.ui-grid-render-container').attr('id')
+            };
+
+            var gridId = getGridId($element);
+
             var listeners = {
                 onMouseDownEventListener: function (e) {
                     currentTarget = angular.element(e.target);
@@ -162,6 +173,11 @@
 
                     this.classList.add(uiGridDraggableRowsConstants.ROW_TARGET_CLASS);
                     e.dataTransfer.setData('Text', 'move'); // Need to set some data for FF to work
+
+                    if (uiGridDraggableRowsSettings.limitDropToSelf) {
+                        e.dataTransfer.setData('gridId', getGridId($(e.currentTarget)));
+                    }
+                    
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
 
@@ -204,6 +220,14 @@
 
                     if (draggedRow === this) {
                         return false;
+                    }
+
+                    if (uiGridDraggableRowsSettings.limitDropToSelf) {
+                        var targetGridId = getGridId($(e.currentTarget));
+                        var sourceGridId = e.dataTransfer.getData("gridId");
+                        if(targetGridId !== sourceGridId) {
+                            return false;
+                        }
                     }
 
                     uiGridDraggableRowsCommon.toIndex = data().indexOf($scope.$parent.$parent.row.entity);
