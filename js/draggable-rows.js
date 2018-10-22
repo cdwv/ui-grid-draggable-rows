@@ -268,13 +268,13 @@
             }
 		
 	    $scope.$on('$destroy', function() {
-		row.removeEventListener('dragover', listeners.onDragOverEventListener, false);
+                row.removeEventListener('dragover', listeners.onDragOverEventListener, false);
                 row.removeEventListener('dragstart', listeners.onDragStartEventListener, false);
                 row.removeEventListener('dragleave', listeners.onDragLeaveEventListener, false);
                 row.removeEventListener('dragenter', listeners.onDragEnterEventListener, false);
                 row.removeEventListener('dragend', listeners.onDragEndEventListener, false);
                 row.removeEventListener('drop', listeners.onDropEventListener);
-		row.removeEventListener('mousedown', listeners.onMouseDownEventListener, false);
+                row.removeEventListener('mousedown', listeners.onMouseDownEventListener, false);
                 row.removeEventListener('mouseup', listeners.onMouseUpEventListener, false);
 	    });
         };
