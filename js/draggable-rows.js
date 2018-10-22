@@ -267,7 +267,7 @@
                 row.addEventListener('mouseup', listeners.onMouseUpEventListener, false);
             }
 		
-	    $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function() {
                 row.removeEventListener('dragover', listeners.onDragOverEventListener, false);
                 row.removeEventListener('dragstart', listeners.onDragStartEventListener, false);
                 row.removeEventListener('dragleave', listeners.onDragLeaveEventListener, false);
@@ -276,7 +276,7 @@
                 row.removeEventListener('drop', listeners.onDropEventListener);
                 row.removeEventListener('mousedown', listeners.onMouseDownEventListener, false);
                 row.removeEventListener('mouseup', listeners.onMouseUpEventListener, false);
-	    });
+            });
         };
     }])
 
