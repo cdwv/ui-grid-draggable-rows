@@ -176,7 +176,7 @@ $scope.gridData.onRegisterApi = function (gridApi) {
 
 ## Support
 
-[<img width="300" title="Codewave.eu" src="https://new-cms-backend.dev.cdwv.pl/image/250x180/b1afbd61-e8bf-11e8-8855-669b46138f27.svg">](http://codewave.eu)
+[<img width="300" title="Codewave.eu" src="https://codewave.eu/image/250x180/b1afbd61-e8bf-11e8-8855-669b46138f27.svg">](http://codewave.eu)
 
 Project is currently maintained by [codewave.eu](http://codewave.eu).
 
