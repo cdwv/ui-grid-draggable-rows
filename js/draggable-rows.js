@@ -104,12 +104,12 @@
 
                 // issue #16
                 if (grid.api.hasOwnProperty('edit')) {
-                    grid.api.edit.on.beginCellEdit(null, function() {
+                    grid.api.edit.on.beginCellEdit($scope, function() {
                         draggableState = row.getAttribute('draggable');
                         row.setAttribute('draggable', false);
                     });
 
-                    grid.api.edit.on.afterCellEdit(null, function() {
+                    grid.api.edit.on.afterCellEdit($scope, function() {
                         row.setAttribute('draggable', draggableState);
                         draggableState = null;
                     });
@@ -177,7 +177,7 @@
                     if (uiGridDraggableRowsSettings.limitDropToSelf) {
                         e.dataTransfer.setData('gridId', getGridId($(e.currentTarget)));
                     }
-                    
+
                     uiGridDraggableRowsCommon.draggedRow = this;
                     uiGridDraggableRowsCommon.draggedRowEntity = $scope.$parent.$parent.row.entity;
 
